@@ -11,8 +11,8 @@ export class GrabGameComponent implements OnInit {
 
   archipelago: Archipelago
   stage: number
-  startIsland:Island;
-  currentIsland:Island;
+  startIsland: Island;
+  currentIsland: Island;
   ngOnInit() {
   }
 
@@ -24,7 +24,17 @@ export class GrabGameComponent implements OnInit {
    * jump to islands
    */
   grab(direction: Direction) {
-    //get current Island and get the closest neighbor one in asked direction
+    var island=this.findNeighbor(this.currentIsland,direction)
+    if(island){
+      this.currentIsland=island
+      this.currentIsland.status=Status.ONIT
+      if(this.findRemainingIslands()==0){
+        //show a message of success
+      }
+      else if(this.isNeighborPesent(this.currentIsland)){
+        //show a warning message for refresh , you are busted
+      }
+    }
     //if nothing
     ///dont do anything
     //else
@@ -35,6 +45,39 @@ export class GrabGameComponent implements OnInit {
     ///elif no more neighbords
     ////say message you are stuck; ask you want to refresh or previous game
 
+
+  }
+  findRemainingIslands():number{
+    return this.archipelago.islands.filter(island=>island.status==Status.ON).length
+  }
+  isNeighborPesent(sourceIsland:Island):boolean{
+    return this.archipelago.islands.filter(island=>(island.status==Status.ON)&&(island.col==sourceIsland.col||island.row==sourceIsland.row)).length>0
+  }
+  findNeighbor( sourceIsland:Island,direction: Direction): Island {
+    var island: Island;
+    switch (direction) {
+      case Direction.DOWN: {
+        island = this.archipelago.islands.find(island => island.status == Status.ON && island.col == sourceIsland.col && island.row > sourceIsland.row)
+        break;
+      }
+      case Direction.UP: {
+        island = this.archipelago.islands.find(island => island.status == Status.ON && island.col == sourceIsland.col && island.row <sourceIsland.row)
+        break;
+      }
+      case Direction.LEFT: {
+        island = this.archipelago.islands.find(island => island.status == Status.ON && island.row == sourceIsland.row && island.col < sourceIsland.col)
+        break;
+      }
+      case Direction.RIGHT: {
+        island = this.archipelago.islands.find(island => island.status == Status.ON && island.row == sourceIsland.row && island.col > sourceIsland.col)
+        break;
+      }
+      default: {
+        //statements; 
+        break;
+      }
+    }
+    return island;
   }
   /**
    * go back and forth different stages
