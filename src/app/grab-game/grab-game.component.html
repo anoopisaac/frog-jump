@@ -1,0 +1,13 @@
+<div class="grabgame">
+  <div class="controls">
+    <div class="prev" (click)="navigate(-1)">prev</div>
+    <div class="refresh" (click)="navigate(0)">refresh</div>
+    <div class="next" (click)="navigate(1)">next</div>
+  </div>
+  <div class="archipelago">
+    <div *ngFor="let islands of archipelago.islands;">
+      <div *ngFor="let island of islands;" [ngClass]="{true:island.status == Status.ON ? 'island':'ocean',true:island.status == Status.ONIT ? 'monkey':''}">
+      </div>
+    </div>
+  </div>
+</div>
