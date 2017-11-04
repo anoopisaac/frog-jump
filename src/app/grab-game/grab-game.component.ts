@@ -11,12 +11,19 @@ export class GrabGameComponent implements OnInit {
 
   archipelago: Archipelago
   stage: number
-  startIsland: Island;
+  startIsland: Island={row:-1,col:4,status:Status.ON};
   currentIsland: Island;
   ngOnInit() {
   }
 
   populateArchi() {
+
+    var cells=[{col:5,row:5}];
+    var islands:Island[][]=new Array(this.archipelago.width).fill(0).map((value, rowIndex) => {
+      return  new Array(this.archipelago.width).fill(0).map((value, colIndex) => {
+        return {row:rowIndex,col:colIndex,status:cells.find(cell=>cell.row==rowIndex&&cell.col==colIndex)?Status.ON:Status.OFF}
+      })
+    })
     //create a new archi by pulling cells from a service.
   }
 

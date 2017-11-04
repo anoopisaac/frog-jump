@@ -1,8 +1,8 @@
 <div class="grabgame">
   <div class="controls">
-    <div class="prev" (click)="navigate(-1)">prev</div>
-    <div class="refresh" (click)="navigate(0)">refresh</div>
-    <div class="next" (click)="navigate(1)">next</div>
+    <div class="prev" (click)="navigateStage(-1)">prev</div>
+    <div class="refresh" (click)="navigateStage(0)">refresh</div>
+    <div class="next" (click)="navigateStage(1)">next</div>
   </div>
   <div class="archipelago">
     <div *ngFor="let islands of archipelago.islands;">
